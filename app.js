@@ -24,7 +24,17 @@ var passportSchema = new Schema ({
 var Passport = mongoose.model('Passport', passportSchema);
 
 app.get('/', (req,res)=>{
-  res.send('hello');
+  res.render('index.ejs');
+});
+
+app.post('/report', (req,res)=>{
+  var mpassport = new Passport(req.body);
+  mpassport.save().then((doc)=>{
+    console.log(doc);
+    res.send("saved");
+  }).catch((e)=>{
+    res.send("出现错误，请重试");
+  });
 });
 
 
